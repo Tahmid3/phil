@@ -19,7 +19,7 @@
     "max_batches_per_day": 150,
     "max_pool_after_strata": 400
   },
-  "real_trading_enabled": true,
+  "real_trading_enabled": false,
   "real": {
     "_comment": "Caps for real execution via Pearl Connect (laptop only). Hard ceilings live in core/validate.py; raising them is a protected-core edit by design.",
     "max_stake_usd": 1.0,
