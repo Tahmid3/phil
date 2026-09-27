@@ -7,6 +7,14 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
+# Windows (operator machine, 2026-09-26): Python defaults to the cp1252 locale
+# encoding for open(), so every read of journal/cycles.log (UTF-8, em dashes in
+# hand-written lines) raises UnicodeDecodeError. That silently broke the pacing
+# predictor below: its heredoc died, the elif went false, and every tick ran on
+# Opus regardless of LIGHT/FULL. The failure errs safe but costs real money.
+# UTF-8 mode makes open() and stdout UTF-8 for this shell and every child.
+export PYTHONUTF8=1
+
 # One loop per checkout. Two loop.sh processes in the same working tree
 # commit over each other and collide with the cloud routine (2026-09-15 to
 # 2026-09-21: a second loop started without PEARL_CONNECT_STORE ran next to
